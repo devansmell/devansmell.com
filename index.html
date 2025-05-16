@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Burt Portfolio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,700;1,14..32,700&display=swap');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      font-family: 'Inter', sans-serif;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      color: white;
+    }
+
+    .clockshite {
+      mix-blend-mode: difference;
+      color: #ffffff;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 2rem;
+      cursor: grab;
+      z-index: 1000;
+    }
+
+    .gallery {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+
+    .gallery img {
+      max-width: 500px;
+      height: auto;
+      cursor: grab;
+      position: absolute;
+      user-select: none;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .contact-fixed {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      z-index: 100;
+    }
+
+    .contact-fixed span {
+      color: rgba(255, 255, 255, 0.85);
+      background: rgb(255, 255, 255);
+      padding: 0.25rem 0.75rem;
+      font-size: 1.2rem;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="clockshite" id="clock"></div>
+
+  <div class="gallery" id="gallery">
+    <img src="img1.png" style="top: 30px; left: 50px;" />
+    <img src="img2.png" style="top: 90px; left: 150px;" />
+    <img src="img3.png" style="top: 170px; left: 250px;" />
+    <img src="img4.png" style="top: 250px; left: 350px;" />
+    <img src="img5.png" style="top: 100px; left: 500px;" />
+    <img src="img6.png" style="top: 300px; left: 600px;" />
+    <img src="img7.png" style="top: 200px; left: 750px;" />
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <img src="" id="lightbox-img" />
+  </div>
+
+  <div class="contact-fixed">
+    <span style="color: black; background: rgb(255, 255, 255); padding: 0.25rem 0.75rem;">
+      <a href="mailto:hi@devansmell.com" rel="mailto">contact us</a>
+    </span>
+  </div>
+  
+
+  <script>
+    const clock = document.getElementById('clock');
+    function updateClock() {
+      const now = new Date();
+      clock.textContent = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  
+    let dragTarget = null;
+    let offsetX = 0, offsetY = 0;
+    let hasDragged = false;
+    let zIndexCounter = 1000; // initial z-index base
+  
+    document.addEventListener('mousedown', e => {
+      if (e.target.tagName === 'IMG' || e.target.classList.contains('clockshite')) {
+        dragTarget = e.target;
+        offsetX = e.offsetX;
+        offsetY = e.offsetY;
+        hasDragged = false;
+        zIndexCounter++; // increment to bring this element on top
+        dragTarget.style.zIndex = zIndexCounter;
+        document.body.style.cursor = 'grabbing';
+      }
+    });
+  
+    document.addEventListener('mousemove', e => {
+      if (!dragTarget) return;
+      hasDragged = true;
+      dragTarget.style.position = 'absolute';
+      dragTarget.style.left = `${e.pageX - offsetX}px`;
+      dragTarget.style.top = `${e.pageY - offsetY}px`;
+    });
+  
+    document.addEventListener('mouseup', e => {
+      document.body.style.cursor = 'default';
+      dragTarget = null;
+    });
+  
+    // Lightbox logic with drag-block
+    document.querySelectorAll('.gallery img').forEach(img => {
+      img.addEventListener('click', e => {
+        if (hasDragged) {
+          e.preventDefault();
+          e.stopPropagation();
+          hasDragged = false;
+          return;
+        }
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightboxImg.src = img.src;
+        lightbox.style.display = 'flex';
+      });
+    });
+  
+    document.getElementById('lightbox').addEventListener('click', () => {
+      document.getElementById('lightbox').style.display = 'none';
+    });
+  </script>
+  
+  
+  
+</body>
+</html>
