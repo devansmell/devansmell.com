@@ -112,6 +112,10 @@
   
 
   <script>
+      // Redirect mobile users
+  if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    window.location.href = "mobile.html";
+  }
     const clock = document.getElementById('clock');
     function updateClock() {
       const now = new Date();
