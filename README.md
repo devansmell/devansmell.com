@@ -11,3 +11,8 @@ Original:
 
 Remake:
 ![Original](https://github.com/devansmell/devansmell.com/blob/main/remake.gif?raw=true)
+
+
+# To-Do
+- [ ] Make images smaller to reduce loadtimes
+- [x] Mobile Page + redirect
