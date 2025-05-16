@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>devansmell.com</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,700;1,14..32,700&display=swap');
+
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .clockshite {
+      mix-blend-mode: difference;
+      color: #ffffff;
+      font-size: 2rem;
+      cursor: grab;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+
+    .image-container {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 3rem;
+    }
+
+    .image-container img {
+      max-width: 90%;
+      height: auto;
+      pointer-events: none; /* disables dragging */
+      user-select: none;
+    }
+
+    .contact {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    .contact span {
+      color: rgba(255, 255, 255, 0.85);
+      background: rgb(255, 255, 255);
+      padding: 0.2em 0.5em;
+    }
+  </style>
+</head>
+<body>
+  <div class="clockshite" id="clock">00:00:00</div>
+
+  <div class="image-container">
+    <img src="img6.png" alt="Image 6" />
+  </div>
+
+  <div class="contact">
+    <span><a href="mailto:hi@devansmell.com" rel="mailto">contact us</a></span>
+  </div>
+
+  <script>
+    const clock = document.getElementById('clock');
+    function updateClock() {
+      const now = new Date();
+      clock.textContent = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // make clock draggable on mobile
+    let isDragging = false, offsetX = 0, offsetY = 0;
+
+    clock.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      const touch = e.touches[0];
+      offsetX = touch.clientX - clock.offsetLeft;
+      offsetY = touch.clientY - clock.offsetTop;
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const touch = e.touches[0];
+      clock.style.left = `${touch.clientX - offsetX}px`;
+      clock.style.top = `${touch.clientY - offsetY}px`;
+    });
+
+    window.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+  </script>
+</body>
+</html>
