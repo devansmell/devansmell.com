@@ -20,6 +20,7 @@
       height: 100vh;
       overflow: hidden;
       color: white;
+      user-select: none;
     }
 
     .clockshite {
@@ -112,6 +113,10 @@
   
 
   <script>
+document.addEventListener('contextmenu', e => {
+  e.preventDefault();
+});
+
       // Redirect mobile users
   if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
     window.location.href = "mobile.html";
@@ -153,7 +158,7 @@
       document.body.style.cursor = 'default';
       dragTarget = null;
     });
-  
+    
     // Lightbox logic with drag-block
     document.querySelectorAll('.gallery img').forEach(img => {
       img.addEventListener('click', e => {
