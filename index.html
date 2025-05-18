@@ -38,15 +38,20 @@
       position: relative;
       width: 100vw;
       height: 100vh;
-      display: block;
     }
 
-    .gallery img {
+    .image-wrap {
+      position: absolute;
+      cursor: grab;
+      z-index: 1;
+    }
+
+    .image-wrap img {
       max-width: 500px;
       height: auto;
-      cursor: grab;
-      position: absolute;
       user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
     }
 
     .lightbox {
@@ -92,13 +97,13 @@
   <div class="clockshite" id="clock"></div>
 
   <div class="gallery" id="gallery">
-    <img src="img1.png" style="top: 30px; left: 50px;" />
-    <img src="img2.png" style="top: 90px; left: 150px;" />
-    <img src="img3.png" style="top: 170px; left: 250px;" />
-    <img src="img4.png" style="top: 250px; left: 350px;" />
-    <img src="img5.png" style="top: 100px; left: 500px;" />
-    <img src="img6.png" style="top: 300px; left: 600px;" />
-    <img src="img7.png" style="top: 200px; left: 750px;" />
+    <div class="image-wrap" style="top: 30px; left: 50px;"><img src="img1.png" /></div>
+    <div class="image-wrap" style="top: 90px; left: 150px;"><img src="img2.png" /></div>
+    <div class="image-wrap" style="top: 170px; left: 250px;"><img src="img3.png" /></div>
+    <div class="image-wrap" style="top: 250px; left: 350px;"><img src="img4.png" /></div>
+    <div class="image-wrap" style="top: 100px; left: 500px;"><img src="img5.png" /></div>
+    <div class="image-wrap" style="top: 300px; left: 600px;"><img src="img6.png" /></div>
+    <div class="image-wrap" style="top: 200px; left: 750px;"><img src="img7.png" /></div>
   </div>
 
   <div class="lightbox" id="lightbox">
@@ -110,17 +115,28 @@
       <a href="mailto:hi@devansmell.com" rel="mailto">contact us</a>
     </span>
   </div>
-  
 
   <script>
-document.addEventListener('contextmenu', e => {
-  e.preventDefault();
-});
+    // ASCII Cat Art
+    const cat = `
+ _._     _,-'""\`-._
+(,-.\`._,'(       |\\\`-/|
+    \`-.-' \\ )-\\( , o o)
+          \`-    \\_\`"\`'-`;
 
-      // Redirect mobile users
-  if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    window.location.href = "mobile.html";
-  }
+    function showDevMessage() {
+      console.log("hey there! happy you wanted a look, check my github @devansmell for the code. but in the meantime look at this sick ass cat");
+      console.clear();
+      console.log(cat);
+    }
+
+    window.addEventListener('load', showDevMessage);
+
+    // Redirect mobile users
+    if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      window.location.href = "mobile.html";
+    }
+
     const clock = document.getElementById('clock');
     function updateClock() {
       const now = new Date();
@@ -128,74 +144,57 @@ document.addEventListener('contextmenu', e => {
     }
     setInterval(updateClock, 1000);
     updateClock();
-  
+
     let dragTarget = null;
     let offsetX = 0, offsetY = 0;
     let hasDragged = false;
-    let zIndexCounter = 1000; // initial z-index base
-  
+    let zIndexCounter = 1000;
+
     document.addEventListener('mousedown', e => {
-      if (e.target.tagName === 'IMG' || e.target.classList.contains('clockshite')) {
-        dragTarget = e.target;
-        offsetX = e.offsetX;
-        offsetY = e.offsetY;
+      if (e.target.closest('.image-wrap') || e.target.classList.contains('clockshite')) {
+        dragTarget = e.target.closest('.image-wrap') || e.target;
+        const rect = dragTarget.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
         hasDragged = false;
-        zIndexCounter++; // increment to bring this element on top
+        zIndexCounter++;
         dragTarget.style.zIndex = zIndexCounter;
         document.body.style.cursor = 'grabbing';
       }
     });
-  
+
     document.addEventListener('mousemove', e => {
       if (!dragTarget) return;
       hasDragged = true;
-      dragTarget.style.position = 'absolute';
       dragTarget.style.left = `${e.pageX - offsetX}px`;
       dragTarget.style.top = `${e.pageY - offsetY}px`;
     });
-  
-    document.addEventListener('mouseup', e => {
+
+    document.addEventListener('mouseup', () => {
       document.body.style.cursor = 'default';
       dragTarget = null;
     });
-    
-    // Lightbox logic with drag-block
-    document.querySelectorAll('.gallery img').forEach(img => {
-      img.addEventListener('click', e => {
+
+    // Lightbox logic
+    document.querySelectorAll('.image-wrap').forEach(wrapper => {
+      wrapper.addEventListener('click', e => {
         if (hasDragged) {
-          e.preventDefault();
-          e.stopPropagation();
           hasDragged = false;
           return;
         }
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        lightboxImg.src = img.src;
-        lightbox.style.display = 'flex';
+        const img = wrapper.querySelector('img');
+        if (img) {
+          const lightbox = document.getElementById('lightbox');
+          const lightboxImg = document.getElementById('lightbox-img');
+          lightboxImg.src = img.src;
+          lightbox.style.display = 'flex';
+        }
       });
     });
-  
+
     document.getElementById('lightbox').addEventListener('click', () => {
       document.getElementById('lightbox').style.display = 'none';
     });
-
-      // ASCII Cat Art
-  const cat = `
- _._     _,-'""\`-._
-(,-.\`._,'(       |\\\`-/|
-    \`-.-' \\ )-\\( , o o)
-          \`-    \\_\`"\`'-`;
-
-  function showDevMessage() {
-    console.log("hey there! happy you wanted a look, check my github @devansmell for the code. but in the meantime look at this sick ass cat");
-    console.log(cat);
-  }
-
-  // Run this on page load
-  window.addEventListener('load', showDevMessage);
   </script>
-  
-  
-  
 </body>
 </html>
