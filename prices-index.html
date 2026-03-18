@@ -110,12 +110,13 @@
     .freeform-gallery {
       position: relative;
       width: 100%;
+      padding-bottom: 110%; /* approximate aspect for the overlap layout */
       margin: 2rem auto;
     }
     .freeform-gallery img {
       position: absolute;
       cursor: pointer;
-      transition: transform 0.15s ease;
+      transition: transform 0.15s ease, z-index 0s;
     }
     .freeform-gallery img:hover { transform: scale(1.04); z-index: 99 !important; }
 
@@ -161,8 +162,12 @@
     /* ── Blur word ── */
     .blur-word { color: white; filter: blur(3px); }
 
+    /* ── Section spacer ── */
+    .spacer { display: block; height: 1rem; }
+
     @media (max-width: 700px) {
       .hero-img { max-width: 95%; }
+      .freeform-gallery { padding-bottom: 200%; }
       .column-set { grid-template-columns: 1fr; }
       h1 { font-size: 2.5rem; }
     }
@@ -179,6 +184,7 @@
     <h1>HIRE ME</h1>
     <br><br>
 
+    <!-- Hero image: hash U2843125805986363442443944499253 = 651695099_858942100526700_4792455759673415436_n.jpg -->
     <img class="hero-img zoomable" src="img/651695099_858942100526700_4792455759673415436_n.jpg" alt="Hero photo">
 
     <br><br><br>
@@ -197,12 +203,27 @@
 
 <!-- ══════════════════════════════════════════
      SECTION 2 — 35MM FILM
+     9 images: 000008–000041 (35mm film shots)
 ══════════════════════════════════════════ -->
 <section class="page" id="35mm">
   <div class="page-content">
     <h1>35mm film</h1>
     <br>
 
+    <!--
+      Freeform gallery — 9 images.
+      Positions preserved from freeform-x / freeform-y / freeform-z / freeform-scale attributes.
+      Images mapped in slot order:
+        slot-0  000008.jpg   (31.5%, x=2.3%,  y=0%)
+        slot-1  000011.jpg   (41.4%, x=30.9%, y=4.9%)
+        slot-2  000012.jpg   (31.7%, x=70.5%, y=22.4%)
+        slot-3  000020.jpg   (34.3%, x=4.9%,  y=36.5%)
+        slot-4  000021.jpg   (35.9%, x=53.4%, y=37.5%)
+        slot-5  000022.jpg   (32.6%, x=29.9%, y=51.4%)
+        slot-6  000023.jpg   (29.5%, x=71.4%, y=56.7%)
+        slot-7  000031.jpg   (33.1%, x=-2.2%, y=66.6%)
+        slot-8  000041.jpg   (28.5%, x=27.7%, y=77.0%)
+    -->
     <div class="freeform-gallery" id="gallery-35mm" style="padding-bottom: 110%; margin-bottom: 18rem;">
       <img src="img/000008.jpg"  style="width:31.5%; left:2.3%;  top:0%;    z-index:5;" alt="35mm photo">
       <img src="img/000011.jpg"  style="width:41.4%; left:30.9%; top:4.9%;  z-index:6;" alt="35mm photo">
@@ -218,9 +239,9 @@
     <div class="column-set">
       <div class="column-unit">
         <h1>
-          Press Pics + Gig Pics<br>
-          <br>Gig Pics<br>
-          <br>Press Pics
+          Press Pics + Gig Pics<br>65 eur<br>
+          <br>Gig Pics:<br>45eur<br>
+          <br>Press Pics:<br>40eur
         </h1>
       </div>
       <div class="column-unit">
@@ -240,34 +261,53 @@
 
 <!-- ══════════════════════════════════════════
      SECTION 3 — DIGICAM
+     13 images: P1010055–edit10 (digicam shots)
 ══════════════════════════════════════════ -->
 <section class="page" id="digicam">
   <div class="page-content">
     <h1>DIGICAM</h1>
     <br>
 
+    <!--
+      Freeform gallery — 13 images.
+      Mapped in slot order to digicam files:
+        slot-0   P1010055.jpg         (32.5%, x=1.3%,  y=0%)
+        slot-1   P1010176.jpg         (30.0%, x=68.1%, y=1.4%)
+        slot-2   P1010223.jpg         (30.8%, x=32.1%, y=12.0%)
+        slot-3   P1010224.jpg         (38.9%, x=58.9%, y=27.0%)
+        slot-4   P1010232.jpg         (31.0%, x=3.7%,  y=27.9%)
+        slot-5   P1010249.jpg         (25.8%, x=29.8%, y=41.7%)
+        slot-6   P1010267.jpg         (20.0%, x=71.4%, y=49.1%)
+        slot-7   2026-03-14_16-25-01.jpg (29%,  x=4.1%,  y=57.4%)
+        slot-8   2026-03-14_16-45-48.jpg (27%,  x=31.4%, y=58.9%)
+        slot-9   edit5.jpg            (32.2%, x=56.2%, y=62.4%)
+        slot-10  edit7.jpg            (29.7%, x=36.5%, y=74.4%)
+        slot-11  edit9.jpg            (33%,   x=57.8%, y=82.4%)
+        slot-12  edit10.jpg           (26%,   x=17.5%, y=87.5%)
+    -->
     <div class="freeform-gallery" id="gallery-digicam" style="padding-bottom: 130%; margin-bottom: 18rem;">
-      <img src="img/P1010055.jpg"             style="width:32.5%; left:1.3%;  top:0%;    z-index:7;"  alt="Digicam photo">
-      <img src="img/P1010176.jpg"             style="width:30.0%; left:68.1%; top:1.4%;  z-index:9;"  alt="Digicam photo">
-      <img src="img/P1010223.jpg"             style="width:30.8%; left:32.1%; top:12.0%; z-index:10;" alt="Digicam photo">
-      <img src="img/P1010224.jpg"             style="width:38.9%; left:58.9%; top:27.0%; z-index:11;" alt="Digicam photo">
-      <img src="img/P1010232.jpg"             style="width:31.0%; left:3.7%;  top:27.9%; z-index:8;"  alt="Digicam photo">
-      <img src="img/P1010249.jpg"             style="width:25.8%; left:29.8%; top:41.7%; z-index:13;" alt="Digicam photo">
-      <img src="img/P1010267.jpg"             style="width:20.0%; left:71.4%; top:49.1%; z-index:12;" alt="Digicam photo">
-      <img src="img/2026-03-14_16-25-01.jpg"  style="width:29.0%; left:4.1%;  top:57.4%; z-index:1;"  alt="Digicam photo">
-      <img src="img/2026-03-14_16-45-48.jpg"  style="width:27.0%; left:31.4%; top:58.9%; z-index:2;"  alt="Digicam photo">
-      <img src="img/edit5.jpg"                style="width:32.2%; left:56.2%; top:62.4%; z-index:3;"  alt="Digicam photo">
-      <img src="img/edit7.jpg"                style="width:29.7%; left:36.5%; top:74.4%; z-index:5;"  alt="Digicam photo">
-      <img src="img/edit9.jpg"                style="width:33.0%; left:57.8%; top:82.4%; z-index:6;"  alt="Digicam photo">
-      <img src="img/edit10.jpg"               style="width:26.0%; left:17.5%; top:87.5%; z-index:4;"  alt="Digicam photo">
+      <img src="img/P1010055.jpg"              style="width:32.5%; left:1.3%;  top:0%;    z-index:7;"  alt="Digicam photo">
+      <img src="img/P1010176.jpg"              style="width:30.0%; left:68.1%; top:1.4%;  z-index:9;"  alt="Digicam photo">
+      <img src="img/P1010223.jpg"              style="width:30.8%; left:32.1%; top:12.0%; z-index:10;" alt="Digicam photo">
+      <img src="img/P1010224.jpg"              style="width:38.9%; left:58.9%; top:27.0%; z-index:11;" alt="Digicam photo">
+      <img src="img/P1010232.jpg"              style="width:31.0%; left:3.7%;  top:27.9%; z-index:8;"  alt="Digicam photo">
+      <img src="img/P1010249.jpg"              style="width:25.8%; left:29.8%; top:41.7%; z-index:13;" alt="Digicam photo">
+      <img src="img/P1010267.jpg"              style="width:20.0%; left:71.4%; top:49.1%; z-index:12;" alt="Digicam photo">
+      <img src="img/2026-03-14_16-25-01.jpg"   style="width:29.0%; left:4.1%;  top:57.4%; z-index:1;"  alt="Digicam photo">
+      <img src="img/2026-03-14_16-45-48.jpg"   style="width:27.0%; left:31.4%; top:58.9%; z-index:2;"  alt="Digicam photo">
+      <img src="img/edit5.jpg"                 style="width:32.2%; left:56.2%; top:62.4%; z-index:3;"  alt="Digicam photo">
+      <img src="img/edit7.jpg"                 style="width:29.7%; left:36.5%; top:74.4%; z-index:5;"  alt="Digicam photo">
+      <img src="img/edit9.jpg"                 style="width:33.0%; left:57.8%; top:82.4%; z-index:6;"  alt="Digicam photo">
+      <img src="img/edit10.jpg"                style="width:26.0%; left:17.5%; top:87.5%; z-index:4;"  alt="Digicam photo">
     </div>
 
     <div class="column-set">
       <div class="column-unit">
         <h1>
-          Experimental Gig Shoot<br>
+          Experimental Gig Shoot:<br>15eur<br>
           <br>
-          Mad <span class="blur-word">Sh*t</span> Edit
+          Mad <span class="blur-word">Sh*t</span> Edit:<br>
+          Additional 5eur
         </h1>
       </div>
       <div class="column-unit">
